@@ -1,33 +1,20 @@
 export default function handler(req, res) {
+  res.setHeader("Content-Type", "application/json");
 
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-
-  if (req.method === "OPTIONS") {
-    return res.status(200).end();
-  }
-
-  const noticias = [
+  res.status(200).json([
     {
-      titulo: "Karol G anuncia nueva gira internacional",
-      categoria: "Música",
-      fecha: "30 junio 2026",
-      resumen: "La artista confirmó nuevas fechas en Latinoamérica y Europa."
+      titulo: "Carlos Vives anuncia gira internacional",
+      imagen: "https://images.unsplash.com/photo-1508973379184-7517410fb0bc",
+      resumen: "El artista confirmó nuevas fechas en América y Europa.",
+      categoria: "música",
+      fecha: "2026-06-30"
     },
     {
-      titulo: "Bad Bunny domina el streaming global",
-      categoria: "Streaming",
-      fecha: "30 junio 2026",
-      resumen: "Su nuevo álbum lidera todas las plataformas digitales."
-    },
-    {
-      titulo: "Festival 2026 confirma cartel oficial",
-      categoria: "Eventos",
-      fecha: "30 junio 2026",
-      resumen: "Artistas globales encabezan el evento más esperado del año."
+      titulo: "Avances en inteligencia artificial impactan los medios",
+      imagen: "https://images.unsplash.com/photo-1677442136019-21780ecad995",
+      resumen: "La IA está transformando la creación de contenido digital.",
+      categoria: "tecnología",
+      fecha: "2026-06-30"
     }
-  ];
-
-  return res.status(200).json(noticias);
+  ]);
 }
