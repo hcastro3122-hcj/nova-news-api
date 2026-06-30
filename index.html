@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Nova Stereo News</title>
+
+<style>
+body{
+    margin:0;
+    font-family: Arial, sans-serif;
+    background:#0b0c10;
+    color:white;
+}
+
+.header{
+    padding:20px;
+    font-size:20px;
+    font-weight:bold;
+    color:#00e0ff;
+    border-bottom:1px solid rgba(255,255,255,0.1);
+}
+
+.container{
+    padding:15px;
+    max-width:900px;
+    margin:auto;
+}
+
+.card{
+    display:flex;
+    gap:12px;
+    padding:12px;
+    margin-bottom:12px;
+    border-radius:14px;
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.08);
+    transition:0.2s;
+}
+
+.card:hover{
+    transform:translateY(-3px);
+    border-color:rgba(0,224,255,0.4);
+}
+
+img{
+    width:90px;
+    height:90px;
+    object-fit:cover;
+    border-radius:12px;
+}
+
+.title{
+    font-size:15px;
+    font-weight:bold;
+    margin-bottom:4px;
+}
+
+.meta{
+    font-size:11px;
+    color:#00e0ff;
+    margin-bottom:6px;
+}
+
+.text{
+    font-size:13px;
+    opacity:0.85;
+    line-height:1.4;
+}
+
+.loading{
+    padding:40px;
+    text-align:center;
+    opacity:0.6;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">🔥 Nova Stereo News</div>
+
+<div class="container" id="feed">
+    <div class="loading">Cargando noticias...</div>
+</div>
+
+<script>
+async function loadNews(){
+    const feed = document.getElementById("feed");
+
+    try{
+        const res = await fetch("https://nova-news-api.vercel.app/api/noticias");
+        const data = await res.json();
+
+        feed.innerHTML = "";
+
+        data.forEach(n => {
+            const div = document.createElement("div");
+            div.className = "card";
+
+            div.innerHTML = `
+                <img src="${n.imagen || 'https://via.placeholder.com/90'}" />
+                <div>
+                    <div class="title">${n.titulo}</div>
+                    <div class="meta">${n.categoria || ''} • ${n.fecha || ''}</div>
+                    <div class="text">${n.resumen || ''}</div>
+                </div>
+            `;
+
+            feed.appendChild(div);
+        });
+
+    }catch(err){
+        feed.innerHTML = "<div class='loading'>Error cargando noticias</div>";
+    }
+}
+
+loadNews();
+</script>
+
+</body>
+</html>
